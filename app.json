@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Ide_calendar",
+    "slug": "calendar-vee",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": true,
+      "bundleIdentifier": "com.vee.calendar"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.vee.calendar"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "calendar-vee",
+    "updates": {
+      "url": "https://u.expo.dev/92de608e-84ec-474e-9342-8772cfd7d658"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "plugins": [
+      "expo-updates",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "อนุญาตให้ Calendar Vee ใช้ Face ID เพื่อเข้าสู่ระบบ"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "92de608e-84ec-474e-9342-8772cfd7d658"
+      }
+    },
+    "owner": "veerachai_suwatvanich"
+  }
+}
