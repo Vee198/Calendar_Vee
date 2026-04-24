@@ -48,13 +48,13 @@ const SharedCalendarScreen: React.FC = () => {
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'owner':
-        return { label: 'เจ้าของ', color: '#6C63FF' };
+        return { label: 'เจ้าของ', color: COLORS.primary };
       case 'editor':
-        return { label: 'แก้ไขได้', color: '#10B981' };
+        return { label: 'แก้ไขได้', color: COLORS.success };
       case 'viewer':
-        return { label: 'ดูอย่างเดียว', color: '#64748B' };
+        return { label: 'ดูอย่างเดียว', color: COLORS.textMuted };
       default:
-        return { label: role, color: '#64748B' };
+        return { label: role, color: COLORS.textMuted };
     }
   };
 
@@ -190,18 +190,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingVertical: 12,
   },
   headerCard: {
-    backgroundColor: '#6C63FF', borderRadius: 16,
+    backgroundColor: COLORS.primary, borderRadius: 16,
     padding: 24, alignItems: 'center', marginBottom: 24,
   },
   headerIcon: { fontSize: 48, marginBottom: 12 },
-  headerTitle: { fontSize: 22, fontWeight: '700', color: '#fff', marginBottom: 8 },
-  headerSubtitle: { fontSize: 14, color: '#E0DEFF', textAlign: 'center', lineHeight: 20 },
+  headerTitle: { fontSize: 22, fontWeight: '700', color: COLORS.white, marginBottom: 8 },
+  headerSubtitle: { fontSize: 14, color: COLORS.textSecondary, textAlign: 'center', lineHeight: 20 },
   section: { marginBottom: 24 },
   sectionTitle: {
     fontSize: 16, fontWeight: 'bold', color: COLORS.text, marginBottom: 12,
   },
   card: {
-    backgroundColor: '#fff', borderRadius: 12,
+    backgroundColor: COLORS.card, borderRadius: 12,
     overflow: 'hidden',
     shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08, shadowRadius: 4, elevation: 3,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   onlineDot: {
     position: 'absolute', bottom: 2, right: 2,
     width: 12, height: 12, borderRadius: 6,
-    backgroundColor: '#22C55E', borderWidth: 2, borderColor: '#fff',
+    backgroundColor: COLORS.success, borderWidth: 2, borderColor: COLORS.card,
   },
   memberName: { fontSize: 15, fontWeight: '600', color: COLORS.text, marginBottom: 4 },
   roleBadge: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary, borderRadius: 8,
     paddingHorizontal: 20, justifyContent: 'center',
   },
-  inviteBtnText: { color: '#fff', fontSize: 14, fontWeight: '600' },
+  inviteBtnText: { color: COLORS.white, fontSize: 14, fontWeight: '600' },
   settingRow: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: 16, paddingVertical: 14,
@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
   },
   copyLinkText: { fontSize: 14, color: COLORS.primary, fontWeight: '600' },
   previewCard: {
-    backgroundColor: '#F0FDF4', borderRadius: 12,
-    padding: 20, borderWidth: 1, borderColor: '#BBF7D0',
+    backgroundColor: 'rgba(52, 211, 153, 0.15)', borderRadius: 12,
+    padding: 20, borderWidth: 0.5, borderColor: COLORS.success,
   },
   previewIcon: { fontSize: 32, marginBottom: 8 },
   previewTitle: { fontSize: 16, fontWeight: '700', color: COLORS.text, marginBottom: 12 },

@@ -528,7 +528,7 @@ const AISecretaryScreen: React.FC = () => {
           disabled={!inputText.trim() || loading}
         >
           {loading
-            ? <ActivityIndicator size="small" color="#fff" />
+            ? <ActivityIndicator size="small" color={COLORS.white} />
             : <Text style={styles.sendIcon}>✈️</Text>
           }
         </TouchableOpacity>
@@ -538,10 +538,10 @@ const AISecretaryScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   center: {
     flex: 1, justifyContent: 'center', alignItems: 'center',
-    backgroundColor: '#F8F9FA', paddingHorizontal: 24,
+    backgroundColor: COLORS.background, paddingHorizontal: 24,
   },
   disabledIcon: { fontSize: 64, marginBottom: 16 },
   disabledTitle: {
@@ -555,40 +555,40 @@ const styles = StyleSheet.create({
   // Header
   header: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#fff', paddingHorizontal: 16, paddingVertical: 12,
-    borderBottomWidth: 1, borderBottomColor: '#EBEBEB',
+    backgroundColor: COLORS.card, paddingHorizontal: 16, paddingVertical: 12,
+    borderBottomWidth: 0.5, borderBottomColor: COLORS.border,
     gap: 12,
   },
   headerAvatar: {
     width: 44, height: 44, borderRadius: 22,
-    backgroundColor: '#EDE9FF', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: 'rgba(108, 99, 255, 0.15)', justifyContent: 'center', alignItems: 'center',
     overflow: 'hidden',
   },
   headerAvatarImg: { width: 44, height: 44, borderRadius: 22 },
   headerName: { fontSize: 16, fontWeight: '700', color: COLORS.text },
   onlineDot: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
-  dotGreen: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22C55E' },
-  onlineText: { fontSize: 12, color: '#22C55E', fontWeight: '500' },
+  dotGreen: { width: 8, height: 8, borderRadius: 4, backgroundColor: COLORS.success },
+  onlineText: { fontSize: 12, color: COLORS.success, fontWeight: '500' },
   menuBtn: {
     width: 40, height: 40, borderRadius: 20,
-    backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: COLORS.glass, justifyContent: 'center', alignItems: 'center',
   },
   menuBtnText: { fontSize: 20 },
   // Actions Panel
   actionsPanel: {
-    backgroundColor: '#fff',
-    borderBottomWidth: 1, borderBottomColor: '#EBEBEB',
+    backgroundColor: COLORS.backgroundSecondary,
+    borderBottomWidth: 0.5, borderBottomColor: COLORS.border,
     paddingVertical: 12,
   },
   actionsScroll: {
     paddingHorizontal: 16, gap: 10,
   },
   actionCard: {
-    width: 130, backgroundColor: '#fff',
+    width: 130, backgroundColor: COLORS.card,
     borderRadius: 12, padding: 12,
     borderTopWidth: 3,
     shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08, shadowRadius: 6, elevation: 3,
+    shadowOpacity: 0.2, shadowRadius: 6, elevation: 3,
   },
   actionIcon: { fontSize: 28, marginBottom: 8 },
   actionTitle: { fontSize: 13, fontWeight: '700', color: COLORS.text, marginBottom: 4 },
@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
   msgRowAI: { justifyContent: 'flex-start', gap: 8 },
   aiBubbleAvatar: {
     width: 32, height: 32, borderRadius: 16,
-    backgroundColor: '#EDE9FF', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: 'rgba(108, 99, 255, 0.15)', justifyContent: 'center', alignItems: 'center',
   },
   avatarImage: {
     width: 32, height: 32, borderRadius: 16,
@@ -610,15 +610,14 @@ const styles = StyleSheet.create({
     maxWidth: '78%', paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18,
   },
   bubbleUser: {
-    backgroundColor: '#6C63FF', borderBottomRightRadius: 4,
+    backgroundColor: COLORS.primary, borderBottomRightRadius: 4,
   },
   bubbleAI: {
-    backgroundColor: '#fff', borderBottomLeftRadius: 4,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08, shadowRadius: 3, elevation: 2,
+    backgroundColor: COLORS.glass, borderBottomLeftRadius: 4,
+    borderWidth: 0.5, borderColor: COLORS.border,
   },
   bubbleText: { fontSize: 14, color: COLORS.text, lineHeight: 20 },
-  bubbleTextUser: { color: '#fff' },
+  bubbleTextUser: { color: COLORS.white },
   typingRow: {
     flexDirection: 'row', alignItems: 'flex-end', gap: 8,
     paddingHorizontal: 16, paddingBottom: 6,
@@ -631,37 +630,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 8,
   },
   chip: {
-    backgroundColor: '#EDE9FF', borderRadius: 16,
+    backgroundColor: 'rgba(108, 99, 255, 0.15)', borderRadius: 16,
     paddingHorizontal: 12, paddingVertical: 6,
-    borderWidth: 1, borderColor: '#C4B5FD',
+    borderWidth: 0.5, borderColor: 'rgba(108, 99, 255, 0.3)',
   },
-  chipText: { fontSize: 12, color: '#6C63FF', fontWeight: '600' },
+  chipText: { fontSize: 12, color: COLORS.primaryLight, fontWeight: '600' },
   // Input
   inputBar: {
     flexDirection: 'row', alignItems: 'flex-end', gap: 8,
     paddingHorizontal: 12, paddingVertical: 8,
-    backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#EBEBEB',
+    backgroundColor: COLORS.card, borderTopWidth: 0.5, borderTopColor: COLORS.border,
   },
   input: {
-    flex: 1, backgroundColor: '#F3F4F6', borderRadius: 20,
+    flex: 1, backgroundColor: COLORS.glass, borderRadius: 20,
     paddingHorizontal: 16, paddingVertical: 10, fontSize: 14,
     color: COLORS.text, maxHeight: 100,
-    borderWidth: 1, borderColor: '#E5E7EB',
+    borderWidth: 0.5, borderColor: COLORS.border,
   },
   sendBtn: {
     width: 44, height: 44, borderRadius: 22,
-    backgroundColor: '#6C63FF', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center',
   },
   sendBtnDisabled: { backgroundColor: COLORS.textSecondary, opacity: 0.5 },
   sendIcon: { fontSize: 18 },
   // Mic button
   micBtn: {
     width: 44, height: 44, borderRadius: 22,
-    backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center',
-    borderWidth: 1, borderColor: '#E5E7EB',
+    backgroundColor: COLORS.glass, justifyContent: 'center', alignItems: 'center',
+    borderWidth: 0.5, borderColor: COLORS.border,
   },
   micBtnActive: {
-    backgroundColor: '#FEE2E2', borderColor: '#EF4444',
+    backgroundColor: 'rgba(248, 113, 113, 0.15)', borderColor: COLORS.danger,
   },
   micIcon: { fontSize: 20 },
   // Voice overlay
@@ -675,18 +674,18 @@ const styles = StyleSheet.create({
   },
   voiceCircle: {
     width: 100, height: 100, borderRadius: 50,
-    backgroundColor: '#EF4444', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: COLORS.danger, justifyContent: 'center', alignItems: 'center',
   },
   voiceIcon: { fontSize: 44 },
   voiceText: {
-    color: '#fff', fontSize: 16, fontWeight: '600', marginBottom: 20,
+    color: COLORS.white, fontSize: 16, fontWeight: '600', marginBottom: 20,
   },
   voiceStopBtn: {
-    backgroundColor: '#fff', borderRadius: 24,
+    backgroundColor: COLORS.white, borderRadius: 24,
     paddingHorizontal: 32, paddingVertical: 12,
   },
   voiceStopText: {
-    fontSize: 16, fontWeight: '700', color: '#EF4444',
+    fontSize: 16, fontWeight: '700', color: COLORS.danger,
   },
 });
 

@@ -26,9 +26,9 @@ interface Task {
 }
 
 const STATUS_CONFIG: Record<TaskStatus, { label: string; icon: string; color: string; bg: string }> = {
-  pending:  { label: 'Pending',  icon: '⏳', color: '#F59E0B', bg: '#FEF3C7' },
-  complete: { label: 'Complete', icon: '✅', color: '#10B981', bg: '#D1FAE5' },
-  missed:   { label: 'Missed',   icon: '❌', color: '#EF4444', bg: '#FEE2E2' },
+  pending:  { label: 'Pending',  icon: '⏳', color: COLORS.warning, bg: 'rgba(251, 191, 36, 0.15)' },
+  complete: { label: 'Complete', icon: '✅', color: COLORS.success, bg: 'rgba(52, 211, 153, 0.15)' },
+  missed:   { label: 'Missed',   icon: '❌', color: COLORS.danger, bg: 'rgba(248, 113, 113, 0.15)' },
 };
 
 const TASKS_STORAGE_KEY = 'calendarVee_tasks';
@@ -93,7 +93,7 @@ const TaskDonut = ({ tasks }: { tasks: Task[] }) => {
     <View style={donutStyles.wrapper}>
       <Svg width={size} height={size}>
         <G rotation="-90" origin={`${center}, ${center}`}>
-          <Circle cx={center} cy={center} r={radius} stroke="#E5E7EB" strokeWidth={strokeWidth} fill="none" />
+          <Circle cx={center} cy={center} r={radius} stroke={COLORS.border} strokeWidth={strokeWidth} fill="none" />
           {arcs.map((arc, i) => (
             <Circle
               key={i}
@@ -344,7 +344,7 @@ const TaskScreen: React.FC = () => {
         <TextInput
           style={styles.addInput}
           placeholder="เพิ่ม Task ใหม่..."
-          placeholderTextColor="#9CA3AF"
+          placeholderTextColor={COLORS.textMuted}
           value={newTaskText}
           onChangeText={setNewTaskText}
           onSubmitEditing={addTask}
@@ -363,37 +363,37 @@ const TaskScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   // Header
   header: {
-    backgroundColor: '#1E40AF',
+    backgroundColor: COLORS.primary,
     paddingHorizontal: 20, paddingTop: 12, paddingBottom: 16,
   },
   headerTitle: {
-    fontSize: 22, fontWeight: '800', color: '#fff', letterSpacing: 0.5,
+    fontSize: 22, fontWeight: '800', color: COLORS.white, letterSpacing: 0.5,
   },
   headerSubtitle: {
-    fontSize: 13, color: '#93C5FD', marginTop: 2,
+    fontSize: 13, color: COLORS.textSecondary, marginTop: 2,
   },
   // Date selector
   dateSelectorRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#fff', paddingVertical: 12,
-    borderBottomWidth: 1, borderBottomColor: '#E5E7EB',
+    backgroundColor: COLORS.card, paddingVertical: 12,
+    borderBottomWidth: 0.5, borderBottomColor: COLORS.border,
     gap: 20,
   },
   dateArrow: {
     width: 36, height: 36, borderRadius: 18,
-    backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: COLORS.backgroundSecondary, justifyContent: 'center', alignItems: 'center',
   },
-  dateArrowText: { fontSize: 24, color: '#1E40AF', fontWeight: '600' },
+  dateArrowText: { fontSize: 24, color: COLORS.primaryLight, fontWeight: '600' },
   dateText: { fontSize: 16, fontWeight: '600', color: COLORS.text },
-  dateTextToday: { color: '#1E40AF' },
+  dateTextToday: { color: COLORS.primaryLight },
   // Scroll
   scrollArea: { flex: 1 },
   // Chart card
   chartCard: {
-    margin: 16, backgroundColor: '#fff', borderRadius: 16, padding: 16,
+    margin: 16, backgroundColor: COLORS.card, borderRadius: 16, padding: 16,
     shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08, shadowRadius: 8, elevation: 4,
   },
@@ -417,11 +417,11 @@ const styles = StyleSheet.create({
   },
   emptyList: { alignItems: 'center', paddingVertical: 30 },
   emptyListText: { fontSize: 15, color: COLORS.textSecondary },
-  emptyListHint: { fontSize: 12, color: '#9CA3AF', marginTop: 4 },
+  emptyListHint: { fontSize: 12, color: COLORS.textMuted, marginTop: 4 },
   // Task row
   taskRow: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#fff', borderRadius: 12, padding: 14,
+    backgroundColor: COLORS.card, borderRadius: 12, padding: 14,
     marginBottom: 10, borderLeftWidth: 4,
     shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06, shadowRadius: 4, elevation: 2,
@@ -431,16 +431,16 @@ const styles = StyleSheet.create({
     width: 28, height: 28, borderRadius: 8, borderWidth: 2.5,
     justifyContent: 'center', alignItems: 'center',
   },
-  checkmark: { color: '#fff', fontSize: 16, fontWeight: '700' },
-  checkmarkMissed: { color: '#EF4444', fontSize: 14, fontWeight: '700' },
+  checkmark: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
+  checkmarkMissed: { color: COLORS.danger, fontSize: 14, fontWeight: '700' },
   taskTitle: {
     flex: 1, fontSize: 14, fontWeight: '500', color: COLORS.text,
   },
   taskTitleDone: {
-    textDecorationLine: 'line-through', color: '#9CA3AF',
+    textDecorationLine: 'line-through', color: COLORS.textMuted,
   },
   taskTitleMissed: {
-    color: '#EF4444', opacity: 0.7,
+    color: COLORS.danger, opacity: 0.7,
   },
   statusBadge: {
     paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12,
@@ -450,27 +450,27 @@ const styles = StyleSheet.create({
   tipCard: {
     flexDirection: 'row', alignItems: 'center',
     marginHorizontal: 16, marginTop: 12, padding: 12,
-    backgroundColor: '#EFF6FF', borderRadius: 12, gap: 8,
+    backgroundColor: 'rgba(108, 99, 255, 0.15)', borderRadius: 12, gap: 8,
   },
   tipIcon: { fontSize: 16 },
-  tipText: { fontSize: 11, color: '#1E40AF', lineHeight: 18, flex: 1 },
+  tipText: { fontSize: 11, color: COLORS.primaryLight, lineHeight: 18, flex: 1 },
   // Add bar
   addBar: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
     paddingHorizontal: 16, paddingVertical: 10,
-    backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#E5E7EB',
+    backgroundColor: COLORS.card, borderTopWidth: 0.5, borderTopColor: COLORS.border,
   },
   addInput: {
-    flex: 1, backgroundColor: '#F3F4F6', borderRadius: 12,
+    flex: 1, backgroundColor: COLORS.backgroundSecondary, borderRadius: 12,
     paddingHorizontal: 16, paddingVertical: 12, fontSize: 14,
-    color: COLORS.text, borderWidth: 1, borderColor: '#E5E7EB',
+    color: COLORS.text, borderWidth: 0.5, borderColor: COLORS.border,
   },
   addBtn: {
     width: 48, height: 48, borderRadius: 14,
-    backgroundColor: '#1E40AF', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center',
   },
-  addBtnDisabled: { backgroundColor: '#94A3B8', opacity: 0.5 },
-  addBtnText: { fontSize: 28, color: '#fff', fontWeight: '300', marginTop: -2 },
+  addBtnDisabled: { backgroundColor: COLORS.textSecondary, opacity: 0.5 },
+  addBtnText: { fontSize: 28, color: COLORS.white, fontWeight: '300', marginTop: -2 },
 });
 
 export default TaskScreen;

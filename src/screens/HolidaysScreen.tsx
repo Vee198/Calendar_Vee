@@ -410,8 +410,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 16,
-    backgroundColor: COLORS.white,
-    borderBottomWidth: 1,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 0.5,
     borderBottomColor: COLORS.border,
     gap: 12,
   },
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
   },
   holidayItem: {
     flexDirection: 'row',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 8,
     padding: 12,
     marginBottom: 8,
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingTop: 20,

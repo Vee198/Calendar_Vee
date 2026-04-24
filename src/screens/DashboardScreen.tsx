@@ -253,7 +253,7 @@ const DashboardScreen: React.FC = () => {
               cx={center}
               cy={center}
               r={radius}
-              stroke="#E5E7EB"
+              stroke={COLORS.border}
               strokeWidth={strokeWidth}
               fill="none"
             />
@@ -426,19 +426,19 @@ const DashboardScreen: React.FC = () => {
             {/* Progress bar */}
             <View style={styles.taskProgressBarBg}>
               {tComplete > 0 && (
-                <View style={[styles.taskProgressBarSeg, { flex: tComplete, backgroundColor: '#10B981' }]} />
+                <View style={[styles.taskProgressBarSeg, { flex: tComplete, backgroundColor: COLORS.success }]} />
               )}
               {tPending > 0 && (
-                <View style={[styles.taskProgressBarSeg, { flex: tPending, backgroundColor: '#F59E0B' }]} />
+                <View style={[styles.taskProgressBarSeg, { flex: tPending, backgroundColor: COLORS.warning }]} />
               )}
               {tMissed > 0 && (
-                <View style={[styles.taskProgressBarSeg, { flex: tMissed, backgroundColor: '#EF4444' }]} />
+                <View style={[styles.taskProgressBarSeg, { flex: tMissed, backgroundColor: COLORS.danger }]} />
               )}
             </View>
             <View style={styles.taskProgressLegend}>
-              <Text style={[styles.taskProgressLegendItem, { color: '#10B981' }]}>✅ {tComplete} Complete</Text>
-              <Text style={[styles.taskProgressLegendItem, { color: '#F59E0B' }]}>⏳ {tPending} Pending</Text>
-              <Text style={[styles.taskProgressLegendItem, { color: '#EF4444' }]}>❌ {tMissed} Missed</Text>
+              <Text style={[styles.taskProgressLegendItem, { color: COLORS.success }]}>✅ {tComplete} Complete</Text>
+              <Text style={[styles.taskProgressLegendItem, { color: COLORS.warning }]}>⏳ {tPending} Pending</Text>
+              <Text style={[styles.taskProgressLegendItem, { color: COLORS.danger }]}>❌ {tMissed} Missed</Text>
             </View>
           </TouchableOpacity>
         );
@@ -477,17 +477,17 @@ const DashboardScreen: React.FC = () => {
             yAxisSuffix=""
             fromZero
             chartConfig={{
-              backgroundColor: COLORS.white,
-              backgroundGradientFrom: COLORS.white,
-              backgroundGradientTo: COLORS.white,
+              backgroundColor: COLORS.backgroundSecondary,
+              backgroundGradientFrom: COLORS.backgroundSecondary,
+              backgroundGradientTo: COLORS.backgroundSecondary,
               decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
-              labelColor: () => '#374151',
+              color: (opacity = 1) => `rgba(108, 99, 255, ${opacity})`,
+              labelColor: () => COLORS.textSecondary,
               style: { borderRadius: 8 },
               propsForBackgroundLines: {
                 strokeDasharray: '',
-                stroke: '#E5E7EB',
-                strokeWidth: 1,
+                stroke: COLORS.border,
+                strokeWidth: 0.5,
               },
               barPercentage: 0.6,
             }}
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
   welcomeBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1E40AF',
+    backgroundColor: COLORS.primary,
     paddingHorizontal: 20,
     paddingVertical: 12,
     gap: 10,
@@ -608,7 +608,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#fff',
+    color: COLORS.white,
   },
   insightsCard: {
     marginHorizontal: 20,
@@ -672,7 +672,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   statCard: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 12,
     padding: 16,
     borderLeftWidth: 4,
@@ -698,7 +698,7 @@ const styles = StyleSheet.create({
   },
   cardTapHint: {
     fontSize: 9,
-    color: '#9CA3AF',
+    color: COLORS.textMuted,
     marginTop: 6,
   },
   chartSection: {
@@ -711,7 +711,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   chartContainer: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 12,
     padding: 12,
     shadowColor: '#000',
@@ -726,7 +726,7 @@ const styles = StyleSheet.create({
   },
   // Donut chart styles
   donutContainer: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 12,
     paddingVertical: 20,
     paddingHorizontal: 12,
@@ -774,7 +774,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderRadius: 16,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.card,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -797,13 +797,13 @@ const styles = StyleSheet.create({
   taskProgressPct: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#10B981',
+    color: COLORS.success,
   },
   taskProgressBarBg: {
     flexDirection: 'row',
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: COLORS.glass,
     overflow: 'hidden',
     marginBottom: 10,
   },
@@ -825,7 +825,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.backgroundSecondary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
@@ -844,7 +844,7 @@ const styles = StyleSheet.create({
   },
   modalClose: {
     fontSize: 22,
-    color: '#9CA3AF',
+    color: COLORS.textMuted,
     paddingHorizontal: 8,
   },
   modalSubtitle: {
@@ -856,8 +856,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   modalEventDot: {
     width: 10,
@@ -877,7 +877,7 @@ const styles = StyleSheet.create({
   },
   modalEventArrow: {
     fontSize: 22,
-    color: '#D1D5DB',
+    color: COLORS.textMuted,
     marginLeft: 8,
   },
 });

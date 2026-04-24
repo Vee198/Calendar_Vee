@@ -12,12 +12,52 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+import Svg, { Rect, Line, Path, Circle as SvgCircle } from 'react-native-svg';
 import { useAuth } from '../contexts/AuthContext';
 import { biometricService } from '../services/biometric';
+import { COLORS, BORDER_RADIUS, SHADOWS } from '../constants/theme';
 
 const { width, height } = Dimensions.get('window');
 
 type LoginStep = 'username' | 'pin';
+
+// SVG Calendar Icon component
+const CalendarIcon = () => (
+  <Svg width={36} height={36} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={1.8}>
+    <Rect x={3} y={4} width={18} height={18} rx={2} />
+    <Line x1={16} y1={2} x2={16} y2={6} />
+    <Line x1={8} y1={2} x2={8} y2={6} />
+    <Line x1={3} y1={10} x2={21} y2={10} />
+  </Svg>
+);
+
+// SVG Fingerprint/Lock Icon
+const BiometricIcon = ({ isFace }: { isFace: boolean }) => (
+  <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke={COLORS.secondary} strokeWidth={2}>
+    {isFace ? (
+      <>
+        <SvgCircle cx={12} cy={12} r={10} />
+        <Path d="M8 14s1.5 2 4 2 4-2 4-2" />
+        <Line x1={9} y1={9} x2={9.01} y2={9} strokeWidth={3} strokeLinecap="round" />
+        <Line x1={15} y1={9} x2={15.01} y2={9} strokeWidth={3} strokeLinecap="round" />
+      </>
+    ) : (
+      <>
+        <Rect x={3} y={11} width={18} height={11} rx={2} />
+        <Path d="M7 11V7a5 5 0 0110 0v4" />
+      </>
+    )}
+  </Svg>
+);
+
+// Backspace Icon
+const BackspaceIcon = () => (
+  <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={COLORS.textSecondary} strokeWidth={1.8}>
+    <Path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z" />
+    <Line x1={18} y1={9} x2={12} y2={15} />
+    <Line x1={12} y1={9} x2={18} y2={15} />
+  </Svg>
+);
 
 const LoginScreen: React.FC = () => {
   const { loginPin, loginBiometric } = useAuth();
@@ -30,21 +70,16 @@ const LoginScreen: React.FC = () => {
   const [biometricLabel, setBiometricLabel] = useState('');
   const usernameInputRef = useRef<TextInput>(null);
 
-  // Check biometric availability and auto-prompt on mount
   useEffect(() => {
     const checkBiometric = async () => {
       const available = await biometricService.isAvailable();
       setBiometricAvailable(available);
-
       if (available) {
         const label = await biometricService.getBiometricLabel();
         setBiometricLabel(label);
-
-        // Auto-prompt biometric on app open
         handleBiometricLogin();
       }
     };
-
     checkBiometric();
   }, []);
 
@@ -53,11 +88,7 @@ const LoginScreen: React.FC = () => {
     setLoading(true);
     try {
       const success = await loginBiometric();
-      if (!success) {
-        // Biometric failed or cancelled — show normal login
-        setLoading(false);
-      }
-      // If success, AuthContext handles navigation automatically
+      if (!success) setLoading(false);
     } catch (err) {
       setError('Biometric ล้มเหลว กรุณาใช้ PIN แทน');
       setLoading(false);
@@ -85,11 +116,8 @@ const LoginScreen: React.FC = () => {
     setLoading(true);
     try {
       await loginPin(username.trim(), pinCode);
-
-      // After successful login, ask to enable biometric if available and not already enabled
       const canEnable = await biometricService.canEnable();
       const isEnabled = await biometricService.isEnabled();
-
       if (canEnable && !isEnabled) {
         const label = await biometricService.getBiometricLabel();
         Alert.alert(
@@ -119,9 +147,7 @@ const LoginScreen: React.FC = () => {
       const newPin = pin + digit;
       setPin(newPin);
       if (newPin.length === 6) {
-        setTimeout(() => {
-          submitPin(newPin);
-        }, 200);
+        setTimeout(() => submitPin(newPin), 200);
       }
     }
   };
@@ -136,35 +162,37 @@ const LoginScreen: React.FC = () => {
     setError('');
   };
 
+  const isFaceBiometric = biometricLabel.includes('ใบหน้า') || biometricLabel.includes('Face');
+
   return (
     <View style={styles.container}>
-      {/* Background layers */}
-      <View style={[styles.bgLayer, { backgroundColor: '#E3F2FD', top: 0 }]} />
-      <View style={[styles.bgLayer, { backgroundColor: '#BBDEFB', top: height * 0.3 }]} />
-      <View style={[styles.bgLayer, { backgroundColor: '#90CAF9', top: height * 0.6 }]} />
-
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Header */}
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Logo + Brand */}
           <View style={styles.header}>
-            <Text style={styles.appIcon}>📅</Text>
+            <View style={styles.logoBox}>
+              <CalendarIcon />
+            </View>
             <Text style={styles.title}>Calendar Vee</Text>
-            <Text style={styles.subtitle}>ปฏิทินส่วนตัว</Text>
+            <Text style={styles.subtitle}>Smart calendar assistant</Text>
           </View>
 
           {/* === STEP 1: Username === */}
           {step === 'username' && (
-            <View style={styles.pinSection}>
-              <Text style={styles.pinLabel}>กรุณาใส่ชื่อผู้ใช้</Text>
+            <View style={styles.formCard}>
+              <Text style={styles.formLabel}>กรุณาใส่ชื่อผู้ใช้</Text>
 
               <TextInput
                 ref={usernameInputRef}
                 style={styles.usernameInput}
-                placeholder="ชื่อผู้ใช้ (Username)"
-                placeholderTextColor="#90A4AE"
+                placeholder="Username"
+                placeholderTextColor={COLORS.textMuted}
                 value={username}
                 onChangeText={(text) => {
                   setUsername(text);
@@ -177,22 +205,20 @@ const LoginScreen: React.FC = () => {
                 autoFocus={!biometricAvailable}
               />
 
-              {/* Error Message */}
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
               <TouchableOpacity
                 style={[
-                  styles.nextButton,
-                  username.trim().length === 0 && styles.nextButtonDisabled,
+                  styles.primaryButton,
+                  username.trim().length === 0 && styles.primaryButtonDisabled,
                 ]}
                 onPress={handleUsernameSubmit}
                 disabled={username.trim().length === 0}
                 activeOpacity={0.7}
               >
-                <Text style={styles.nextButtonText}>ถัดไป →</Text>
+                <Text style={styles.primaryButtonText}>ถัดไป</Text>
               </TouchableOpacity>
 
-              {/* Biometric Login Button */}
               {biometricAvailable && (
                 <TouchableOpacity
                   style={styles.biometricButton}
@@ -200,19 +226,16 @@ const LoginScreen: React.FC = () => {
                   disabled={loading}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.biometricIcon}>
-                    {biometricLabel.includes('ใบหน้า') || biometricLabel.includes('Face') ? '😊' : '👆'}
-                  </Text>
+                  <BiometricIcon isFace={isFaceBiometric} />
                   <Text style={styles.biometricButtonText}>
-                    เข้าสู่ระบบด้วย{biometricLabel}
+                    เข้าสู่ระบบด้วย {biometricLabel}
                   </Text>
                 </TouchableOpacity>
               )}
 
-              {/* Loading indicator */}
               {loading && (
                 <View style={styles.loadingContainer}>
-                  <ActivityIndicator size="large" color="#1976D2" />
+                  <ActivityIndicator size="large" color={COLORS.primary} />
                   <Text style={styles.loadingText}>กำลังเข้าสู่ระบบ...</Text>
                 </View>
               )}
@@ -221,8 +244,7 @@ const LoginScreen: React.FC = () => {
 
           {/* === STEP 2: PIN Entry === */}
           {step === 'pin' && (
-            <View style={styles.pinSection}>
-              {/* Back button + Username display */}
+            <View style={styles.formCard}>
               <TouchableOpacity style={styles.backButton} onPress={handleBackToUsername}>
                 <Text style={styles.backButtonText}>← เปลี่ยนชื่อผู้ใช้</Text>
               </TouchableOpacity>
@@ -232,85 +254,81 @@ const LoginScreen: React.FC = () => {
                 <Text style={styles.usernameDisplayName}>{username.trim()}</Text>
               </View>
 
-              <Text style={styles.pinLabel}>กรุณาใส่ PIN 6 หลัก</Text>
+              <Text style={styles.formLabel}>กรุณาใส่ PIN 6 หลัก</Text>
 
-              {/* PIN Display Circles — 6 digits */}
-              <View style={styles.pinDisplay}>
+              {/* PIN Dots */}
+              <View style={styles.pinDots}>
                 {[0, 1, 2, 3, 4, 5].map((index) => (
                   <View
                     key={index}
                     style={[
-                      styles.pinCircle,
-                      index < pin.length && styles.pinCircleFilled,
+                      styles.pinDot,
+                      index < pin.length && styles.pinDotFilled,
                     ]}
                   />
                 ))}
               </View>
 
-              {/* Error Message */}
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
               {/* Number Pad */}
-              <View style={styles.numberPad}>
+              <View style={styles.numPad}>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                   <TouchableOpacity
                     key={num}
-                    style={styles.numButton}
+                    style={styles.numKey}
                     onPress={() => handlePinDigit(num.toString())}
                     disabled={loading}
                     activeOpacity={0.6}
                   >
-                    <Text style={styles.numButtonText}>{num}</Text>
+                    <Text style={styles.numKeyText}>{num}</Text>
                   </TouchableOpacity>
                 ))}
 
-                {/* Bottom row: Clear, 0, Backspace */}
                 <TouchableOpacity
-                  style={[styles.numButton, styles.actionButton]}
+                  style={[styles.numKey, styles.actionKey]}
                   onPress={handleClear}
                   disabled={loading}
                   activeOpacity={0.6}
                 >
-                  <Text style={[styles.numButtonText, styles.actionButtonText]}>C</Text>
+                  <Text style={[styles.numKeyText, styles.actionKeyText]}>C</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={styles.numButton}
+                  style={styles.numKey}
                   onPress={() => handlePinDigit('0')}
                   disabled={loading}
                   activeOpacity={0.6}
                 >
-                  <Text style={styles.numButtonText}>0</Text>
+                  <Text style={styles.numKeyText}>0</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[styles.numButton, styles.actionButton]}
+                  style={[styles.numKey, styles.actionKey]}
                   onPress={handlePinBackspace}
                   disabled={loading}
                   activeOpacity={0.6}
                 >
-                  <Text style={[styles.numButtonText, styles.actionButtonText]}>⌫</Text>
+                  <BackspaceIcon />
                 </TouchableOpacity>
               </View>
 
-              {/* Biometric shortcut on PIN step too */}
               {biometricAvailable && (
                 <TouchableOpacity
                   style={styles.biometricMini}
                   onPress={handleBiometricLogin}
                   disabled={loading}
                 >
+                  <BiometricIcon isFace={isFaceBiometric} />
                   <Text style={styles.biometricMiniText}>
-                    {biometricLabel.includes('ใบหน้า') || biometricLabel.includes('Face') ? '😊' : '👆'}{' '}
-                    ใช้{biometricLabel}แทน
+                    ใช้ {biometricLabel} แทน
                   </Text>
                 </TouchableOpacity>
               )}
 
-              {/* Loading indicator */}
               {loading && (
                 <View style={styles.loadingContainer}>
-                  <ActivityIndicator size="large" color="#1976D2" />
+                  <ActivityIndicator size="large" color={COLORS.primary} />
                   <Text style={styles.loadingText}>กำลังเข้าสู่ระบบ...</Text>
                 </View>
               )}
@@ -325,13 +343,7 @@ const LoginScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-  },
-  bgLayer: {
-    position: 'absolute',
-    width: width,
-    height: height * 0.4,
-    opacity: 0.5,
+    backgroundColor: COLORS.background,
   },
   scrollContent: {
     flexGrow: 1,
@@ -340,197 +352,213 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     justifyContent: 'center',
   },
+
+  // Header
   header: {
     alignItems: 'center',
     marginBottom: 40,
   },
-  appIcon: {
-    fontSize: 56,
-    marginBottom: 12,
+  logoBox: {
+    width: 72,
+    height: 72,
+    borderRadius: 20,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+    ...SHADOWS.glow,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#1565C0',
-    marginBottom: 6,
+    fontSize: 28,
+    fontWeight: '600',
+    color: COLORS.primaryLight,
+    marginBottom: 4,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#546E7A',
-    fontWeight: '500',
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    fontWeight: '400',
   },
-  pinSection: {
-    backgroundColor: 'rgba(255,255,255,0.92)',
-    borderRadius: 20,
+
+  // Form Card
+  formCard: {
+    backgroundColor: COLORS.card,
+    borderRadius: BORDER_RADIUS['2xl'],
     paddingVertical: 28,
     paddingHorizontal: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 6,
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
   },
-  pinLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#37474F',
+  formLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: COLORS.textSecondary,
     textAlign: 'center',
     marginBottom: 20,
   },
 
-  // === Username Step ===
+  // Username Input
   usernameInput: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 12,
+    backgroundColor: COLORS.glass,
+    borderRadius: BORDER_RADIUS.lg,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 18,
-    color: '#1565C0',
-    borderWidth: 2,
-    borderColor: '#BBDEFB',
+    color: COLORS.text,
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
     marginBottom: 16,
     textAlign: 'center',
   },
-  nextButton: {
-    backgroundColor: '#1565C0',
-    borderRadius: 12,
+
+  // Primary Button
+  primaryButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: BORDER_RADIUS.lg,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 8,
+    ...SHADOWS.glow,
   },
-  nextButtonDisabled: {
-    backgroundColor: '#B0BEC5',
+  primaryButtonDisabled: {
+    backgroundColor: COLORS.textMuted,
+    shadowOpacity: 0,
   },
-  nextButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  primaryButtonText: {
+    color: COLORS.white,
+    fontSize: 16,
     fontWeight: '600',
   },
 
-  // === Biometric Button ===
+  // Biometric
   biometricButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E8F5E9',
-    borderRadius: 12,
-    paddingVertical: 14,
+    backgroundColor: COLORS.glass,
+    borderRadius: BORDER_RADIUS.pill,
+    paddingVertical: 12,
     marginTop: 16,
-    borderWidth: 1,
-    borderColor: '#A5D6A7',
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
     gap: 8,
   },
-  biometricIcon: {
-    fontSize: 24,
-  },
   biometricButtonText: {
-    color: '#2E7D32',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  biometricMini: {
-    alignItems: 'center',
-    paddingTop: 16,
-  },
-  biometricMiniText: {
-    color: '#1976D2',
+    color: COLORS.secondary,
     fontSize: 14,
     fontWeight: '500',
   },
+  biometricMini: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 16,
+    gap: 6,
+  },
+  biometricMiniText: {
+    color: COLORS.secondary,
+    fontSize: 13,
+    fontWeight: '500',
+  },
 
-  // === Back button ===
+  // Back Button
   backButton: {
     marginBottom: 12,
   },
   backButtonText: {
-    color: '#1976D2',
+    color: COLORS.primaryLight,
     fontSize: 14,
     fontWeight: '500',
   },
 
-  // === Username display on PIN step ===
+  // Username Display
   usernameDisplay: {
     alignItems: 'center',
     marginBottom: 20,
     paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E3F2FD',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   usernameDisplayLabel: {
-    fontSize: 13,
-    color: '#90A4AE',
+    fontSize: 12,
+    color: COLORS.textMuted,
     marginBottom: 4,
   },
   usernameDisplayName: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1565C0',
+    fontWeight: '600',
+    color: COLORS.primaryLight,
   },
 
-  // === PIN Display ===
-  pinDisplay: {
+  // PIN Dots
+  pinDots: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 12,
-    marginBottom: 12,
+    marginBottom: 16,
   },
-  pinCircle: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+  pinDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     borderWidth: 2,
-    borderColor: '#90CAF9',
-    backgroundColor: 'white',
+    borderColor: COLORS.primaryLight,
+    backgroundColor: 'transparent',
   },
-  pinCircleFilled: {
-    backgroundColor: '#1565C0',
-    borderColor: '#1565C0',
+  pinDotFilled: {
+    backgroundColor: COLORS.primaryLight,
   },
+
+  // Error
   errorText: {
-    color: '#D32F2F',
+    color: COLORS.danger,
     fontSize: 13,
     textAlign: 'center',
     marginBottom: 8,
     fontWeight: '500',
   },
-  numberPad: {
+
+  // Number Pad
+  numPad: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 12,
+    marginTop: 8,
   },
-  numButton: {
+  numKey: {
     width: '30%',
-    aspectRatio: 1.4,
-    borderRadius: 14,
-    backgroundColor: '#E3F2FD',
+    aspectRatio: 1.5,
+    borderRadius: BORDER_RADIUS.lg,
+    backgroundColor: COLORS.glass,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#BBDEFB',
+    marginBottom: 8,
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
   },
-  numButtonText: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#1565C0',
+  numKeyText: {
+    fontSize: 22,
+    fontWeight: '500',
+    color: COLORS.text,
   },
-  actionButton: {
-    backgroundColor: '#ECEFF1',
-    borderColor: '#CFD8DC',
+  actionKey: {
+    backgroundColor: 'transparent',
+    borderColor: COLORS.borderLight,
   },
-  actionButtonText: {
-    color: '#546E7A',
-    fontSize: 20,
+  actionKeyText: {
+    color: COLORS.textSecondary,
+    fontSize: 18,
   },
+
+  // Loading
   loadingContainer: {
     alignItems: 'center',
     paddingTop: 16,
   },
   loadingText: {
     marginTop: 8,
-    fontSize: 14,
-    color: '#546E7A',
+    fontSize: 13,
+    color: COLORS.textSecondary,
   },
 });
 

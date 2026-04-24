@@ -6,8 +6,10 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import Svg, { Rect, Line, Path, Circle as SvgCircle, Polyline } from 'react-native-svg';
 
 import { useAuth } from '../contexts/AuthContext';
+import { COLORS } from '../constants/theme';
 
 // Import screens
 import LoginScreen from '../screens/LoginScreen';
@@ -64,8 +66,9 @@ const CalendarStackNavigator: React.FC = () => {
     <CalendarStack.Navigator
       screenOptions={{
         headerShown: true,
-        headerTintColor: '#1E40AF',
-        headerTitleStyle: { color: '#1E40AF', fontWeight: '600' },
+        headerTintColor: COLORS.primaryLight,
+        headerTitleStyle: { color: COLORS.text, fontWeight: '600' },
+        headerStyle: { backgroundColor: COLORS.background },
       }}
     >
       <CalendarStack.Screen
@@ -106,7 +109,7 @@ const MoreMenuScreen: React.FC<{
     },
     {
       label: 'วันหยุด',
-      icon: '🏖️',
+      icon: '🏖',
       onPress: () => navigation.navigate('Holidays'),
     },
     ...(isAdmin
@@ -120,7 +123,7 @@ const MoreMenuScreen: React.FC<{
       : []),
     {
       label: 'ตั้งค่า',
-      icon: '⚙️',
+      icon: '⚙',
       onPress: () => navigation.navigate('Settings'),
     },
   ];
@@ -150,8 +153,9 @@ const MoreStackNavigator: React.FC = () => {
     <MoreStack.Navigator
       screenOptions={{
         headerShown: true,
-        headerTintColor: '#1E40AF',
-        headerTitleStyle: { color: '#1E40AF', fontWeight: '600' },
+        headerTintColor: COLORS.primaryLight,
+        headerTitleStyle: { color: COLORS.text, fontWeight: '600' },
+        headerStyle: { backgroundColor: COLORS.background },
       }}
     >
       <MoreStack.Screen
@@ -194,17 +198,19 @@ const MainTabNavigator: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#1E40AF',
-        tabBarInactiveTintColor: '#94A3B8',
+        tabBarActiveTintColor: COLORS.tabActive,
+        tabBarInactiveTintColor: COLORS.tabInactive,
         tabBarStyle: {
-          backgroundColor: 'white',
-          borderTopWidth: 1,
-          borderTopColor: '#E2E8F0',
+          backgroundColor: COLORS.tabBarBg,
+          borderTopWidth: 0.5,
+          borderTopColor: COLORS.border,
+          paddingTop: 4,
+          height: 60,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: '500',
-          marginTop: 4,
+          marginTop: 2,
         },
       }}
     >
@@ -213,9 +219,14 @@ const MainTabNavigator: React.FC = () => {
         component={CalendarStackNavigator}
         options={{
           title: 'ปฏิทิน',
-          tabBarLabel: 'ปฏิทิน',
+          tabBarLabel: 'Calendar',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>📅</Text>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
+              <Rect x={3} y={4} width={18} height={18} rx={2} />
+              <Line x1={16} y1={2} x2={16} y2={6} />
+              <Line x1={8} y1={2} x2={8} y2={6} />
+              <Line x1={3} y1={10} x2={21} y2={10} />
+            </Svg>
           ),
         }}
       />
@@ -224,9 +235,14 @@ const MainTabNavigator: React.FC = () => {
         component={DashboardScreen}
         options={{
           title: 'แดชบอร์ด',
-          tabBarLabel: 'แดชบอร์ด',
+          tabBarLabel: 'Dashboard',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>📊</Text>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
+              <Rect x={3} y={3} width={7} height={7} rx={1} />
+              <Rect x={14} y={3} width={7} height={7} rx={1} />
+              <Rect x={3} y={14} width={7} height={7} rx={1} />
+              <Rect x={14} y={14} width={7} height={7} rx={1} />
+            </Svg>
           ),
         }}
       />
@@ -237,7 +253,10 @@ const MainTabNavigator: React.FC = () => {
           title: 'Tasks',
           tabBarLabel: 'Tasks',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>✅</Text>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
+              <Path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+              <Polyline points="22 4 12 14.01 9 11.01" />
+            </Svg>
           ),
         }}
       />
@@ -245,10 +264,12 @@ const MainTabNavigator: React.FC = () => {
         name="AISecretary"
         component={AISecretaryScreen}
         options={{
-          title: 'AI เลขา',
-          tabBarLabel: 'AI เลขา',
+          title: 'AI',
+          tabBarLabel: 'AI',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>🤖</Text>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
+              <Path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </Svg>
           ),
         }}
       />
@@ -257,9 +278,13 @@ const MainTabNavigator: React.FC = () => {
         component={MoreStackNavigator}
         options={{
           title: 'เพิ่มเติม',
-          tabBarLabel: 'เพิ่มเติม',
+          tabBarLabel: 'More',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>⋯</Text>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+              <SvgCircle cx={12} cy={12} r={1.5} />
+              <SvgCircle cx={19} cy={12} r={1.5} />
+              <SvgCircle cx={5} cy={12} r={1.5} />
+            </Svg>
           ),
         }}
       />
@@ -300,11 +325,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.background,
   },
   menuContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.background,
   },
   menuContent: {
     paddingVertical: 16,
@@ -314,8 +339,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F1F5F9',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   menuIcon: {
     fontSize: 24,
@@ -325,11 +350,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
-    color: '#1E293B',
+    color: COLORS.text,
   },
   menuArrow: {
     fontSize: 18,
-    color: '#94A3B8',
+    color: COLORS.textMuted,
   },
 });
 

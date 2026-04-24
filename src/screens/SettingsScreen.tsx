@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   card: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 12,
     overflow: 'hidden',
     shadowColor: '#000',

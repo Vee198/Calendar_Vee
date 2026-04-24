@@ -289,10 +289,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     paddingHorizontal: 16,
     paddingVertical: 14,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: COLORS.border,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   logItem: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 8,
     marginBottom: 8,
     padding: 12,

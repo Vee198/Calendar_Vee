@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import { theme } from '../constants/theme';
+import { theme, COLORS } from '../constants/theme';
 
 interface EventDetail {
   id: string;
@@ -77,10 +77,10 @@ const EventDetailScreen: React.FC<{ navigation: any; route: any }> = ({ navigati
 
   const getStatusColor = (status: string) => {
     const colorMap: { [key: string]: string } = {
-      scheduled: '#1976D2',
-      completed: '#388E3C',
-      cancelled: '#D32F2F',
-      default: '#90CAF9',
+      scheduled: COLORS.primaryLight,
+      completed: COLORS.success,
+      cancelled: COLORS.danger,
+      default: COLORS.textSecondary,
     };
     return colorMap[status.toLowerCase()] || colorMap.default;
   };
@@ -143,7 +143,7 @@ const EventDetailScreen: React.FC<{ navigation: any; route: any }> = ({ navigati
           </TouchableOpacity>
         </View>
         <View style={styles.centerContent}>
-          <ActivityIndicator size="large" color={theme.colors.primary || '#1976D2'} />
+          <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       </View>
     );
@@ -317,7 +317,7 @@ const EventDetailScreen: React.FC<{ navigation: any; route: any }> = ({ navigati
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: COLORS.background,
   },
   header: {
     flexDirection: 'row',
@@ -325,14 +325,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   backButton: {
     fontSize: 16,
     fontWeight: '600',
-    color: theme.colors.primary || '#1976D2',
+    color: COLORS.primaryLight,
   },
   headerActions: {
     flexDirection: 'row',
@@ -341,19 +341,19 @@ const styles = StyleSheet.create({
   headerButton: {
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: theme.colors.primary || '#1976D2',
+    backgroundColor: COLORS.primary,
     borderRadius: 4,
   },
   headerButtonText: {
-    color: 'white',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '600',
   },
   deleteButton: {
-    backgroundColor: '#D32F2F',
+    backgroundColor: COLORS.danger,
   },
   deleteButtonText: {
-    color: 'white',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    color: '#D32F2F',
+    color: COLORS.danger,
   },
   content: {
     flex: 1,
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   titleSection: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
     marginBottom: 12,
   },
   badgesRow: {
@@ -395,13 +395,13 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   badgeText: {
-    color: 'white',
+    color: COLORS.white,
     fontSize: 12,
     fontWeight: '600',
     textTransform: 'capitalize',
   },
   section: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
     marginBottom: 12,
   },
   infoRow: {
@@ -418,22 +418,22 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#546E7A',
+    color: COLORS.textSecondary,
     marginBottom: 4,
   },
   infoContent: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: COLORS.backgroundSecondary,
     borderRadius: 6,
     padding: 8,
   },
   infoText: {
     fontSize: 14,
-    color: '#212121',
+    color: COLORS.text,
     lineHeight: 20,
   },
   descriptionText: {
     fontSize: 14,
-    color: '#424242',
+    color: COLORS.text,
     lineHeight: 22,
   },
   notificationRow: {
@@ -445,37 +445,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#F9F9F9',
+    backgroundColor: COLORS.backgroundSecondary,
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
   },
   notificationItemActive: {
-    backgroundColor: '#E8F5E9',
-    borderColor: '#4CAF50',
+    backgroundColor: 'rgba(52, 211, 153, 0.15)',
+    borderColor: COLORS.success,
   },
   notificationLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#212121',
+    color: COLORS.text,
   },
   notificationCheck: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#4CAF50',
+    color: COLORS.success,
   },
   notesBox: {
-    backgroundColor: '#FFFDE7',
+    backgroundColor: 'rgba(251, 191, 36, 0.15)',
     borderRadius: 6,
     padding: 12,
     borderLeftWidth: 4,
-    borderLeftColor: '#FFB300',
+    borderLeftColor: COLORS.warning,
   },
   notesText: {
     fontSize: 14,
-    color: '#424242',
+    color: COLORS.text,
     lineHeight: 22,
   },
   metaRow: {
@@ -487,11 +487,11 @@ const styles = StyleSheet.create({
   metaLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#546E7A',
+    color: COLORS.textSecondary,
   },
   metaValue: {
     fontSize: 13,
-    color: '#999',
+    color: COLORS.textMuted,
     fontFamily: 'monospace',
   },
 });

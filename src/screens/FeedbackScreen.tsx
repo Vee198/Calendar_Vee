@@ -231,7 +231,7 @@ const FeedbackScreen: React.FC = () => {
             <TextInput
               style={styles.messageInput}
               placeholder="พิมพ์ Feedback ของคุณที่นี่..."
-              placeholderTextColor="#94A3B8"
+              placeholderTextColor={COLORS.textMuted}
               value={message}
               onChangeText={setMessage}
               multiline
@@ -252,7 +252,7 @@ const FeedbackScreen: React.FC = () => {
             disabled={submitting || !category || !rating || !message.trim()}
           >
             {submitting ? (
-              <ActivityIndicator size="small" color="#FFFFFF" />
+              <ActivityIndicator size="small" color={COLORS.white} />
             ) : (
               <Text style={styles.submitButtonText}>📤 ส่ง Feedback</Text>
             )}
@@ -314,15 +314,15 @@ const FeedbackScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: COLORS.background,
   },
 
   // === Tab Bar ===
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0',
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   tabButton: {
     flex: 1,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#94A3B8',
+    color: COLORS.textMuted,
   },
   tabTextActive: {
     color: COLORS.primary,
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1E293B',
+    color: COLORS.text,
     marginBottom: 12,
   },
 
@@ -371,13 +371,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
+    backgroundColor: COLORS.card,
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
     gap: 6,
   },
   categoryChipActive: {
-    backgroundColor: '#EFF6FF',
+    backgroundColor: 'rgba(108, 99, 255, 0.15)',
     borderColor: COLORS.primary,
   },
   categoryIcon: {
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   },
   categoryLabel: {
     fontSize: 13,
-    color: '#64748B',
+    color: COLORS.textSecondary,
     fontWeight: '500',
   },
   categoryLabelActive: {
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
   },
   star: {
     fontSize: 36,
-    color: '#CBD5E1',
+    color: COLORS.border,
   },
   starFilled: {
     color: '#F59E0B',
@@ -418,20 +418,20 @@ const styles = StyleSheet.create({
 
   // Message
   messageInput: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 15,
-    color: '#1E293B',
+    color: COLORS.text,
     minHeight: 120,
   },
   charCount: {
     textAlign: 'right',
     fontSize: 12,
-    color: '#94A3B8',
+    color: COLORS.textMuted,
     marginTop: 4,
   },
 
@@ -444,10 +444,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   submitButtonDisabled: {
-    backgroundColor: '#94A3B8',
+    backgroundColor: COLORS.textSecondary,
   },
   submitButtonText: {
-    color: '#FFFFFF',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -458,10 +458,10 @@ const styles = StyleSheet.create({
     margin: 12,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderWidth: 0.5,
+    borderColor: COLORS.border,
   },
   exportButtonText: {
     fontSize: 13,
@@ -481,11 +481,11 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#64748B',
+    color: COLORS.textSecondary,
   },
   emptySubtext: {
     fontSize: 13,
-    color: '#94A3B8',
+    color: COLORS.textMuted,
     marginTop: 4,
   },
   historyList: {
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   feedbackCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 10,
@@ -518,7 +518,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: COLORS.primary,
-    backgroundColor: '#EFF6FF',
+    backgroundColor: 'rgba(108, 99, 255, 0.15)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 6,
@@ -530,17 +530,17 @@ const styles = StyleSheet.create({
   },
   feedbackDate: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: COLORS.textMuted,
   },
   feedbackMessage: {
     fontSize: 14,
-    color: '#334155',
+    color: COLORS.text,
     lineHeight: 20,
     marginBottom: 8,
   },
   feedbackUser: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: COLORS.textMuted,
     fontStyle: 'italic',
     textAlign: 'right',
   },

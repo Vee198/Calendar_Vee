@@ -254,7 +254,7 @@ const tpStyles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 16,
     padding: 20,
     width: Dimensions.get('window').width * 0.8,
@@ -870,7 +870,7 @@ const styles = StyleSheet.create({
   },
   formGroup: {
     marginBottom: 16,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 10,
     padding: 14,
     shadowColor: '#000',
@@ -976,7 +976,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calendarModal: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 16,
     padding: 16,
     width: Dimensions.get('window').width * 0.92,

@@ -17,7 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import api from '../services/api';
-import { theme } from '../constants/theme';
+import { theme, COLORS } from '../constants/theme';
 
 type ViewMode = 'month' | 'week' | 'list';
 
@@ -519,12 +519,12 @@ const CalendarScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: COLORS.background,
   },
   welcomeBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1E40AF',
+    backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
     paddingVertical: 10,
     gap: 10,
@@ -556,27 +556,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   navArrow: {
     fontSize: 24,
-    color: theme.colors.primary || '#1976D2',
+    color: COLORS.primary,
     fontWeight: '700',
   },
   monthYearText: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
   },
   viewModeTabs: {
     flexDirection: 'row',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   viewModeTab: {
     flex: 1,
@@ -586,12 +586,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activeViewModeTab: {
-    backgroundColor: theme.colors.primary || '#1976D2',
+    backgroundColor: COLORS.primary,
   },
   viewModeText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: COLORS.textSecondary,
   },
   activeViewModeText: {
     color: 'white',
@@ -611,7 +611,7 @@ const styles = StyleSheet.create({
   dayHeaderText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#666',
+    color: COLORS.textSecondary,
     flex: 1,
     textAlign: 'center',
   },
@@ -624,25 +624,25 @@ const styles = StyleSheet.create({
     width: '14.28%',
     aspectRatio: 1,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: COLORS.border,
     padding: 4,
     justifyContent: 'flex-start',
   },
   todayDay: {
-    backgroundColor: '#E3F2FD',
-    borderColor: theme.colors.primary || '#1976D2',
+    backgroundColor: 'rgba(108, 99, 255, 0.2)',
+    borderColor: COLORS.primary,
     borderWidth: 2,
   },
   holidayDay: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: 'rgba(248, 113, 113, 0.15)',
   },
   dayNumber: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
   },
   todayText: {
-    color: theme.colors.primary || '#1976D2',
+    color: COLORS.primary,
   },
   eventDotsContainer: {
     flexDirection: 'row',
@@ -656,22 +656,22 @@ const styles = StyleSheet.create({
   },
   moreText: {
     fontSize: 8,
-    color: '#999',
+    color: COLORS.textMuted,
     marginLeft: 2,
   },
   selectedDayEvents: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     borderRadius: 8,
     padding: 16,
     marginHorizontal: -16,
     marginBottom: -16,
-    borderTopWidth: 1,
+    borderTopWidth: 0.5,
     borderTopColor: '#E0E0E0',
   },
   selectedDayTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
     marginBottom: 12,
   },
   eventItem: {
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     marginBottom: 8,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: COLORS.glass,
     borderRadius: 6,
     paddingHorizontal: 8,
   },
@@ -695,11 +695,11 @@ const styles = StyleSheet.create({
   eventTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#212121',
+    color: COLORS.text,
   },
   eventTime: {
     fontSize: 12,
-    color: '#999',
+    color: COLORS.textMuted,
     marginTop: 2,
   },
   priorityBadge: {
@@ -707,13 +707,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingHorizontal: 6,
     paddingVertical: 2,
-    backgroundColor: '#FFF3CD',
-    color: '#856404',
+    backgroundColor: 'rgba(251, 191, 36, 0.15)',
+    color: COLORS.accent,
     borderRadius: 4,
   },
   noEventsText: {
     fontSize: 14,
-    color: '#999',
+    color: COLORS.textMuted,
     textAlign: 'center',
     marginVertical: 12,
     fontStyle: 'italic',
@@ -731,37 +731,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     borderRadius: 6,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: COLORS.glass,
   },
   weekDayToday: {
-    backgroundColor: theme.colors.primary || '#1976D2',
+    backgroundColor: COLORS.primary,
   },
   weekDayNumber: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#212121',
+    color: COLORS.text,
   },
   weekDayName: {
     fontSize: 11,
-    color: '#666',
+    color: COLORS.textSecondary,
     marginTop: 2,
   },
   timelineEvent: {
     paddingVertical: 12,
     paddingHorizontal: 12,
     marginBottom: 8,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     borderLeftWidth: 4,
     borderRadius: 6,
   },
   timelineEventTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#212121',
+    color: COLORS.text,
   },
   timelineEventTime: {
     fontSize: 12,
-    color: '#999',
+    color: COLORS.textMuted,
     marginTop: 2,
   },
   listEventItem: {
@@ -769,9 +769,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    backgroundColor: 'white',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
+    backgroundColor: COLORS.card,
   },
   listEventBadge: {
     width: 6,
@@ -785,18 +785,18 @@ const styles = StyleSheet.create({
   listEventTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#212121',
+    color: COLORS.text,
   },
   listEventMeta: {
     marginTop: 4,
   },
   listEventTime: {
     fontSize: 12,
-    color: '#999',
+    color: COLORS.textMuted,
   },
   listEventLocation: {
     fontSize: 12,
-    color: '#999',
+    color: COLORS.textMuted,
     marginTop: 2,
   },
   listEventRight: {
@@ -811,16 +811,16 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   statusscheduled: {
-    backgroundColor: '#E3F2FD',
-    color: '#1976D2',
+    backgroundColor: 'rgba(108, 99, 255, 0.2)',
+    color: COLORS.primaryLight,
   },
   statuscompleted: {
-    backgroundColor: '#E8F5E9',
-    color: '#388E3C',
+    backgroundColor: 'rgba(52, 211, 153, 0.15)',
+    color: COLORS.success,
   },
   statuscancelled: {
-    backgroundColor: '#FFEBEE',
-    color: '#D32F2F',
+    backgroundColor: 'rgba(248, 113, 113, 0.15)',
+    color: COLORS.danger,
   },
   fab: {
     position: 'absolute',
@@ -829,7 +829,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: theme.colors.primary || '#1976D2',
+    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 8,
@@ -846,11 +846,11 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
   },
   searchIcon: {
     fontSize: 16,
@@ -859,23 +859,23 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 14,
-    color: '#212121',
+    color: COLORS.text,
     paddingVertical: 6,
     paddingHorizontal: 8,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: COLORS.background,
     borderRadius: 8,
   },
   clearSearch: {
     fontSize: 16,
-    color: '#999',
+    color: COLORS.textMuted,
     paddingHorizontal: 8,
   },
   filterContainer: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.card,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.border,
     flexGrow: 0,
   },
   filterChip: {
@@ -884,14 +884,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: COLORS.background,
     marginRight: 8,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: COLORS.border,
   },
   filterChipActive: {
-    backgroundColor: '#1976D2',
-    borderColor: '#1976D2',
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
   },
   filterDot: {
     width: 8,
@@ -902,7 +902,7 @@ const styles = StyleSheet.create({
   filterChipText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#666',
+    color: COLORS.textSecondary,
   },
   filterChipTextActive: {
     color: 'white',
